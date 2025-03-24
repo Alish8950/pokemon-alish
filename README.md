@@ -112,8 +112,4 @@ Ensure you have **Node.js** and **npm** installed on your system.
 
 The Pokémon Explorer App is a simple yet powerful tool to browse Pokémon interactively. With the integration of Next.js, React, and PokeAPI, it provides a fast and responsive experience for users.
 
----
-
-**Author:** Alish
-**GitHub:** [Your GitHub Profile](https://github.com/your-profile)
 
