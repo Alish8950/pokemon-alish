@@ -1,133 +1,119 @@
-# Front-End Technical Test
+# Pokemon Explorer App
 
-Welcome to CodeWalnut's front-end technical test using React and the [PokeAPI](https://pokeapi.co/)! The PokeAPI provides an extensive REST and GraphQL API for fetching Pokémon data. In this test, you will build a Pokémon app that utilizes the PokeAPI, and you can choose from different levels of difficulty depending on your experience.
+## Introduction
 
----
+The **Pokemon Explorer App** is a web application built using **Next.js** that allows users to browse Pokémon, view their details, and filter/search based on different criteria. The app fetches data from the **PokeAPI** and presents a clean and interactive UI for a seamless browsing experience.
 
-## Setup Instructions
+## Features
 
-### 1. Clone the Repository
+- **Pokemon List Page**: Displays a paginated list of Pokémon.
+- **Pokemon Detail Page**: Shows detailed stats, abilities, and types for a selected Pokémon.
+- **Search Functionality**: Allows users to search for Pokémon by name.
+- **Sorting Feature**: Users can sort Pokémon by name or experience.
+- **Dark Mode Support**: The UI adapts to dark mode themes.
+- **Responsive Design**: Works seamlessly across different screen sizes.
 
-```bash
-git clone https://github.com/CW-Codewalnut/codewalnut-front-end-tech-test.git
-```
+## Technologies Used
 
-### 2. Install Dependencies
+- **Next.js**: For building the React-based frontend.
+- **React Hooks**: Used for state management.
+- **Tailwind CSS**: For styling and responsiveness.
+- **PokeAPI**: The API source for Pokémon data.
 
-We are using `pnpm` for package management. If you haven't installed `pnpm` yet, you can install it globally by running:
 
-```bash
-npm install -g pnpm
-```
+## Code Explanation
 
-Once you have `pnpm` installed, run:
+### 1. **Pokemon Detail Page** (pages/[id].js)
 
-```bash
-pnpm install
-```
+This component fetches detailed data of a Pokémon using its **id** from the URL.
 
-### 3. Available Styling Options
+- **State Management**:
 
-The project is set up with **Tailwind CSS** as the default styling solution. However, you can opt to use any of the following:
+  - `pokemon`: Stores fetched Pokémon details.
+  - `loading`: Controls loading state.
+  - `error`: Stores error messages if the API fails.
 
-- **Tailwind (default)**: Already configured in `src/app/globals.css`.
-- **CSS**: You can create and use custom CSS styles by modifying or adding to `src/app/globals.css`.
-- **Sass**: A basic Sass configuration is already in place. Add your styles to `src/styles/globals.scss`.
+- **Fetching Data**:
 
-You are free to use any styling approach you prefer, these are just the options set up for you already in this project.
+  - The `useEffect` hook triggers the API call when the component loads or when `id` changes.
+  - Pokémon details are fetched from `https://pokeapi.co/api/v2/pokemon/${id}`.
+  - Errors are handled using `try-catch`.
 
-### 4. Running the App
+- **Rendering**:
 
-To start the development server, run:
+  - Displays the Pokémon's image, name, types, abilities, and base stats.
+  - A "Back to List" button allows navigation to the previous page.
 
-```bash
-pnpm dev
-```
+### 2. **Pokemon Context Provider** (context/PokemonContext.js)
 
-This will launch the app in development mode at [http://localhost:3000](http://localhost:3000).
+The `PokemonProvider` manages global state for Pokémon data.
 
-## Challenge Tiers
+- **State Variables**:
 
-### Junior Level
+  - `pokemons`: Stores the list of Pokémon.
+  - `filteredPokemons`: Stores Pokémon after applying filters.
+  - `searchTerm`: Stores the current search input.
+  - `sortBy`: Stores sorting preference.
+  - `loading`: Indicates whether data is being fetched.
+  - `page`: Keeps track of pagination.
 
-#### Task:
+- **Fetching Data**:
 
-Build a simple **Pokémon search app** that allows users to search for Pokémon by name or ID and display their details.
+  - The `useEffect` hook fetches Pokémon data whenever the page or sorting preference changes.
+  - It fetches **basic Pokémon data** and then retrieves additional details like sprites, types, and base experience.
 
-#### Requirements:
+- **Filtering and Sorting**:
 
-- Use the PokeAPI to fetch Pokémon data.
-- Implement a search bar to search by Pokémon name or ID.
-- Display the Pokémon’s name, image, and type(s) when a search is performed.
-- Ensure the app is **mobile responsive**.
+  - Sorting is applied immediately after fetching data.
+  - A second `useEffect` handles filtering based on search input.
 
-#### Bonus Points:
+- **Context Provider**:
 
-- Add error handling for invalid searches.
-- Display a loading indicator while fetching data.
+  - Exposes `pokemons`, `loading`, `page`, `setPage`, `setSearchTerm`, and `setSortBy` to be used in other components.
 
----
+### 3. **Header Component** (components/Header.js)
 
-### Mid Level
+- Displays the **app logo** and the title "Pokemon Explorer App".
+- Uses the `next/image` component for optimized image loading.
 
-#### Task:
+## Installation & Running Locally
 
-Create a **Pokémon explorer app** that allows users to browse and view detailed information on Pokémon with pagination.
+### Prerequisites
 
-#### Requirements:
+Ensure you have **Node.js** and **npm** installed on your system.
 
-- Fetch and display a list of Pokémon with pagination (using `limit` and `offset` query parameters).
-- Implement client-side routing to display individual Pokémon details on a separate page or modal.
-- Include Pokémon name, image, type(s), abilities, and stats (HP, Attack, etc.).
-- Ensure the app is **fully responsive**.
+### Steps to Run
 
-#### Bonus Points:
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-repo/pokemon-explorer.git
+   cd pokemon-explorer
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+4. **Open the app in your browser:**
+   ```
+   http://localhost:3000
+   ```
 
-- Add sorting and filtering by name, type, or base experience.
-- Implement search functionality that filters Pokémon by name.
+## Future Improvements
 
----
+- **Infinite Scrolling** for smoother navigation.
+- **Favorite Pokémon Feature** to allow users to save Pokémon.
+- **Improved UI Animations** for a more engaging experience.
 
-### Senior Level
+## Conclusion
 
-#### Task:
-
-Build an advanced **Pokémon team management app** that allows users to create and manage a team of Pokémon.
-
-#### Requirements:
-
-- Implement **authentication** (mock authentication is sufficient).
-- Allow users to add Pokémon to a team (max 6 per team) and view detailed stats for each team member.
-- Display evolution chain, stats, abilities, and moves for each Pokémon.
-- Allow users to save and manage multiple teams.
-- Implement **client-side routing** using React Router.
-- Use a state management solution like **Context API** or **Redux**.
-
-#### Bonus Points:
-
-- Add drag-and-drop functionality to reorder Pokémon in the team.
-- Include unit and integration testing.
-- Use a data-fetching library like **React Query** for caching and efficient API calls.
-- Implement **Dark Mode** and **Light Mode** toggle.
-
----
-
-## Submission Guidelines
-
-- Fork this repository and submit your solution via a **GitHub repository** link (preferred) or a **zip file**.
-- Make sure to include a **README** in your submission with:
-  - Setup instructions.
-  - Explanation of your approach.
-  - Any challenges or trade-offs you encountered.
+The Pokémon Explorer App is a simple yet powerful tool to browse Pokémon interactively. With the integration of Next.js, React, and PokeAPI, it provides a fast and responsive experience for users.
 
 ---
 
-## Evaluation Criteria
+**Author:** Alish
+**GitHub:** [Your GitHub Profile](https://github.com/your-profile)
 
-- **Code Quality**: We will evaluate your use of clean code practices, meaningful variable names, and comments where necessary.
-- **Responsiveness**: The app should work well on both mobile and desktop devices.
-- **Functionality**: Ensure that all required features work as expected.
-- **Best Practices**: We value the use of best practices in React development, such as proper naming, state management, and component organization.
-- **Testing**: Testing is a big part of modern development, so will value the use of testing in your solution.
-- **Creativity**: Feel free to add any additional features or enhance the design beyond the requirements.
-- **Willingness**: We want people who go the extra mile in everything they do.
